@@ -11,7 +11,6 @@ import argparse
 
 ######### Parser #########
 parser = argparse.ArgumentParser()
-parser.add_argument("-m", "--model", help="model to be trained", default='vanilla_cnn', choices=['vanilla_cnn'])
 parser.add_argument("--seed", help="set random generator seed", default='0')
 parser.add_argument("--download", help="download CIFAR-10?", default='False')
 args = parser.parse_args()
@@ -102,16 +101,16 @@ def test(net, T=1.0):
 	if acc > best_acc:
 		print('Saving..')
 		state = {'net': net.state_dict()}
-		torch.save(state, pretrained_root+'{mod_name}'.format(mod_name=args.model) + '_seed_' + args.seed +'.pth')
+		torch.save(state, pretrained_root+'vanilla_cnn_seed_' + args.seed +'.pth')
 		best_acc = acc
 
-# Create model for evaluation#net = torch.nn.DataParallel(VGG())
-def create_model(name):
+# Create model for evaluation
+def create_model():
 	net = torch.nn.DataParallel(Vanilla_cnn(num_classes=10))
 	return net
 
 ######### Determine model, load, and train #########
-net = create_model(name=args.model)
+net = create_model()
 
 # Train 
 print("\n------------------ Training base model ------------------\n")
