@@ -19,7 +19,7 @@ To install other dependencies, the following command can be used (uses pip):
 ## Organization
 The datasets and code are stored separately with the relative path shown below. 
 
-For a given dataset *X* (e.g., CIFAR-100), the script data_prep_X.py can be used to divide the dataset into separate tasks. The task-wise splits will be stored in the directory *X_splits*. All models trained during the continual learning process will be stored in the directory **cl_models**. Stats collected for train/test/forgetting/cka are stored in the directory **results**. If grid search is applied, the results are stored in the directory **grid_search**. If a model is pretrained on CIFAR-10, the corresponding model is stored in the directory **pretrained**.
+For a given dataset *X* (e.g., CIFAR-100), the script data_prep_X.py can be used to divide the dataset into separate tasks. The task-wise splits will be stored in the directory *X_splits*. All models trained during the continual learning process will be stored in the directory **cl_models**. Stats collected for train/test/forgetting/cka are stored in the directory **results**. If grid search is applied, the results are stored in the directory **grid_search**. Any pretrained models are stored in the directory **pretrained**.
 
 ```bash
 EMR

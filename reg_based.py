@@ -52,7 +52,7 @@ cl_root = 'cl_models/'
 
 ######### Setup the framework from argparser variables #########
 use_pretrained = (args.use_pretrained=='True')
-pretrained_path = 'pretrained/vanilla_cnn_temp_1.0_seed_0.pth'
+pretrained_path = 'pretrained/vanilla_cnn_seed_0.pth'
 dataset = args.dataset + '_splits'
 if not os.path.isdir('results/'+dataset):
 	os.mkdir('results/'+dataset)

@@ -13,7 +13,6 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument("-m", "--model", help="model to be trained", default='vanilla_cnn', choices=['vanilla_cnn'])
 parser.add_argument("--seed", help="set random generator seed", default='0')
-parser.add_argument("--T", help="temperature to smoothen the landscape", default='1')
 parser.add_argument("--download", help="download CIFAR-10?", default='False')
 args = parser.parse_args()
 
@@ -33,8 +32,6 @@ if not os.path.isdir('pretrained'):
 
 pretrained_root = 'pretrained/'
 base_sched, base_epochs, wd = [1e-1, 1e-2, 1e-3], [25, 25, 10], 1e-4
-
-T = float(args.T) # temperature to smooth the loss, if desired
 
 ######### Dataloaders #########
 transform = transforms.Compose(
@@ -62,7 +59,7 @@ def get_optimizer(net, lr, wd):
 
 ######### Training functions #########
 # Training
-def train(net, T=1.0):
+def train(net):
 	net.train()
 	train_loss = 0
 	correct = 0
@@ -70,7 +67,7 @@ def train(net, T=1.0):
 	for batch_idx, (inputs, targets) in enumerate(trainloader):
 		inputs, targets = inputs.to(device), targets.to(device)
 		optimizer.zero_grad()
-		outputs = net(inputs) / T
+		outputs = net(inputs)
 		loss = criterion(outputs, targets)
 		loss.backward()
 		optimizer.step()
@@ -91,7 +88,7 @@ def test(net, T=1.0):
 	with torch.no_grad():
 		for batch_idx, (inputs, targets) in enumerate(testloader):
 			inputs, targets = inputs.to(device), targets.to(device)
-			outputs = net(inputs) / T
+			outputs = net(inputs)
 			loss = criterion(outputs, targets)
 			test_loss += loss.item()
 			_, predicted = outputs.max(1)
@@ -105,7 +102,7 @@ def test(net, T=1.0):
 	if acc > best_acc:
 		print('Saving..')
 		state = {'net': net.state_dict()}
-		torch.save(state, pretrained_root+'{mod_name}'.format(mod_name=args.model) + '_temp_' + str(T) + '_seed_' + args.seed +'.pth')
+		torch.save(state, pretrained_root+'{mod_name}'.format(mod_name=args.model) + '_seed_' + args.seed +'.pth')
 		best_acc = acc
 
 # Create model for evaluation#net = torch.nn.DataParallel(VGG())
@@ -127,8 +124,8 @@ while(lr_ind < len(base_sched)):
 	print("\n--learning rate is {}".format(base_sched[lr_ind]))
 	for n in range(base_epochs[lr_ind]):
 		print('\nEpoch: {}'.format(epoch))
-		train(net, T=T)
+		train(net)
 		epoch += 1
 	lr_ind += 1
-test(net, T=T)
+test(net)
 print("Accuracy of trained model (best checkpoint): {:.2%}".format(best_acc / 100))
