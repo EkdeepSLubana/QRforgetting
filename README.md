@@ -1,6 +1,6 @@
 # Explicit Movement Regularization for Continual Learning
 
-Codebase for the paper "Rethinking Quadratic Regularizers: Explicit Movement Regularization for Continual Learning."
+Codebase for the paper ["Rethinking Quadratic Regularizers: Explicit Movement Regularization for Continual Learning."](https://arxiv.org/abs/2102.02805)
 
 ## Requirements
 
