@@ -1,6 +1,6 @@
 # How do Quadratic Regularizers Prevent Catastrophic Forgetting: The Role of Interpolation
 
-Codebase for the paper "How do Quadratic Regularizers Prevent Catastrophic Forgetting: The Role of Interpolation."
+Codebase for the paper ["How do Quadratic Regularizers Prevent Catastrophic Forgetting: The Role of Interpolation."](https://arxiv.org/abs/2102.02805).
 
 ## Requirements
 
